@@ -32,11 +32,11 @@ class php::params {
 
             #$fpm_dir = "${base_dir}php.d/"
 
-            $fpm_conf_dir = "${fpm_dir}php-fpm.d/"
+            $fpm_conf_dir = "/etc/php-fpm.d/"
 
             #$fpm_ini = "${base_dir}php.ini"
             $fpm_package_name = "php-fpm"
-            $fpm_conf = "${fpm_dir}php-fpm.conf"
+            $fpm_conf = "/etc/php-fpm.conf"
             $fpm_service_name = "php-fpm"
 
             #$apache_dir = "${base_dir}php.d/"
