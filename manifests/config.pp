@@ -55,7 +55,7 @@ class php::config {
           ensure  => file,
           content => $php::php_ini_content,
           source  => $php::php_ini_source;
-
+      }
     }
   }
 }
