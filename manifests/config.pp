@@ -60,31 +60,31 @@ class php::config {
           group   => root,
           require => Class["php::install"],
           ensure  => file,
-          source  => "puppet://modules/php/modules_ini/curl.ini";
+          source  => "puppet:///modules/php/modules_ini/curl.ini";
         "${php::params::conf_dir}fileinfo.ini":
           owner   => root,
           group   => root,
           require => Class["php::install"],
           ensure  => file,
-          source  => "puppet://modules/php/modules_ini/fileinfo.ini";
+          source  => "puppet:///modules/php/modules_ini/fileinfo.ini";
         "${php::params::conf_dir}json.ini":
           owner   => root,
           group   => root,
           require => Class["php::install"],
           ensure  => file,
-          source  => "puppet://modules/php/modules_ini/json.ini";
+          source  => "puppet:///modules/php/modules_ini/json.ini";
         "${php::params::conf_dir}phar.ini":
           owner   => root,
           group   => root,
           require => Class["php::install"],
           ensure  => file,
-          source  => "puppet://modules/php/modules_ini/phar.ini";
+          source  => "puppet:///modules/php/modules_ini/phar.ini";
         "${php::params::conf_dir}zip.ini":
           owner   => root,
           group   => root,
           require => Class["php::install"],
           ensure  => file,
-          source  => "puppet://modules/php/modules_ini/zip.ini";
+          source  => "puppet:///modules/php/modules_ini/zip.ini";
       }
     }
   }
