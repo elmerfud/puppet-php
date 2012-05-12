@@ -30,14 +30,30 @@ define php::fpm::pool(
 ) {
   include php::fpm
 
-  file { "${name}.conf":
-    ensure  => file,
-    path    => "${php::params::fpm_pool_dir}${name}.conf",
-    owner   => 'root',
-    group   => 'root',
-    content => template('php/fpm-pool.conf.erb'),
-    require => Class['php::fpm::install'],
-    before  => Class['php::fpm::service'],
-    notify  => Class['php::fpm::service'],
+  case $operatingsystem {
+    /(Ubuntu|Debian)/: {
+      file { "${name}.conf":
+        ensure  => file,
+        path    => "${php::params::fpm_pool_dir}${name}.conf",
+        owner   => 'root',
+        group   => 'root',
+        content => template('php/fpm-pool.conf.erb'),
+        require => Class['php::fpm::install'],
+        before  => Class['php::fpm::service'],
+        notify  => Class['php::fpm::service'],
+      }
+    }
+    /(RedHat|CentOS)/: {
+      file { "${name}.conf":
+        ensure  => file,
+        path    => "${php::params::fpm_conf_dir}${name}.conf",
+        owner   => 'root',
+        group   => 'root',
+        content => template('php/fpm-pool.conf.erb'),
+        require => Class['php::fpm::install'],
+        before  => Class['php::fpm::service'],
+        notify  => Class['php::fpm::service'],
+      }
+    }
   }
 }

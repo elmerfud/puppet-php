@@ -1,44 +1,61 @@
 class php::config {
-    file { $php::params::extra_dir:
-        owner   => root,
-        group   => root,
-        purge   => true,
-        recurse => true,
-        force   => true,
-        require => Class["php::install"],
-        ensure  => directory,
-    }
+  case $operatingsystem {
+    /(Ubuntu|Debian)/: {
+      file { 
+        $php::params::extra_dir:
+          owner   => root,
+          group   => root,
+          purge   => true,
+          recurse => true,
+          force   => true,
+          require => Class["php::install"],
+          ensure  => directory;
+        $php::params::conf_dir:
+          owner   => root,
+          group   => root,
+          purge   => true,
+          recurse => true,
+          force   => true,
+          require => Class["php::install"],
+          ensure  => directory;
+        $php::params::cli_ini:
+          owner   => root,
+          group   => root,
+          require => Class["php::install"],
+          ensure  => file,
+          content => $php::php_ini_content,
+          source  => $php::php_ini_source;
+        $php::params::cli_dir:
+          owner   => root,
+          group   => root,
+          purge   => true,
+          recurse => true,
+          force   => true,
+          require => Class["php::install"],
+          ensure  => directory;
+        "${php::params::cli_dir}conf.d":
+          ensure => "../conf.d";
+      }
 
-    file { $php::params::conf_dir:
-        owner   => root,
-        group   => root,
-        purge   => true,
-        recurse => true,
-        force   => true,
-        require => Class["php::install"],
-        ensure  => directory,
     }
+    /(RedHat|CentOS)/: {
+      file {
+        $php::params::conf_dir:
+          owner   => root,
+          group   => root,
+          purge   => true,
+          recurse => true,
+          force   => true,
+          require => Class["php::install"],
+          ensure  => directory;
+        $php::params::php_ini:
+          owner   => root,
+          group   => root,
+          require => Class["php::install"],
+          ensure  => file,
+          content => $php::php_ini_content,
+          source  => $php::php_ini_source;
 
-    file { $php::params::cli_ini:
-        owner   => root,
-        group   => root,
-        require => Class["php::install"],
-        ensure  => file,
-        content => $php::cli_ini_content, 
-        source  => $php::cli_ini_source,
     }
-
-    file { $php::params::cli_dir:
-        owner   => root,
-        group   => root,
-        purge   => true,
-        recurse => true,
-        force   => true,
-        require => Class["php::install"],
-        ensure  => directory,
-    }
-
-    file { "${php::params::cli_dir}conf.d":
-        ensure => "../conf.d",
-    }
+  }
 }

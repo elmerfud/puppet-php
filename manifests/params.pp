@@ -18,5 +18,33 @@ class php::params {
             $apache_package_name = "libapache2-mod-php5"
             $apache_service_name = "apache2"
         }
+        /(RedHat|CentOS)/: {
+            #$base_dir = "/etc/php.d"
+            #$cli_dir = "${base_dir}php.d/"
+            #$cli_ini = "${base_dir}php.ini"
+
+            $cli_package_name = "php-cli"
+
+            #$extra_dir = "${base_dir}extra/"
+
+            $php_ini = "/etc/php.ini"
+            $conf_dir = "/etc/php.d/"
+
+            #$fpm_dir = "${base_dir}php.d/"
+
+            $fpm_conf_dir = "${fpm_dir}php-fpm.d/"
+
+            #$fpm_ini = "${base_dir}php.ini"
+            $fpm_package_name = "php-fpm"
+            $fpm_conf = "${fpm_dir}php-fpm.conf"
+            $fpm_service_name = "php-fpm"
+
+            #$apache_dir = "${base_dir}php.d/"
+            #$apache_ini = "${base_dir}php.ini"
+
+            $apache_package_name = "libapache2-mod-php5"
+            $apache_service_name = "apache2"
+        }
+
     }
 }
