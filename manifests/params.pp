@@ -1,4 +1,4 @@
-class php::params {
+class php::params( $php_package_prefix = undef ) {
     case $operatingsystem {
         /(Ubuntu|Debian)/: {
             $base_dir = "/etc/php5/"
@@ -23,7 +23,7 @@ class php::params {
             #$cli_dir = "${base_dir}php.d/"
             #$cli_ini = "${base_dir}php.ini"
 
-            $cli_package_name = "php-cli"
+            $cli_package_name = "${php_package_prefix}cli"
 
             #$extra_dir = "${base_dir}extra/"
 
@@ -35,7 +35,7 @@ class php::params {
             $fpm_conf_dir = "/etc/php-fpm.d/"
 
             #$fpm_ini = "${base_dir}php.ini"
-            $fpm_package_name = "php-fpm"
+            $fpm_package_name = "${php_package_prefix}fpm"
             $fpm_conf = "/etc/php-fpm.conf"
             $fpm_service_name = "php-fpm"
 
@@ -45,6 +45,20 @@ class php::params {
             $apache_package_name = "libapache2-mod-php5"
             $apache_service_name = "apache2"
         }
-
+        /OpenSuSE/: {
+            $base_dir = "/etc/php5/"
+            $cli_dir = "${base_dir}cli/"
+            $cli_ini = "${cli_dir}php.ini"
+            $cli_package_name = "php5"
+            $conf_dir = "${base_dir}conf.d/"
+            $fpm_dir = "${base_dir}fpm/"
+            $fpm_pool_dir = "${fpm_dir}pool.d/"
+            $fpm_ini = "${fpm_dir}php.ini"
+            $fpm_package_name = "php5-fpm"
+            $fpm_conf = "${fpm_dir}php-fpm.conf"
+            $fpm_service_name = "php-fpm"
+            $apache_package_name = "apache2-mod_php5"
+            $apache_service_name = "apache2"
+        }
     }
 }

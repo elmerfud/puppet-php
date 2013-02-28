@@ -15,7 +15,7 @@ define php::module($ensure = present, $source = undef, $content = undef, $requir
         require => $real_require,
     }
 
-    file { $file_name:
+    file { "${php::params::conf_dir}$file_name":
         path    => "${php::params::conf_dir}${file_name}",
         mode    => 644,
         owner   => root,

@@ -55,5 +55,17 @@ define php::fpm::pool(
         notify  => Class['php::fpm::service'],
       }
     }
+    /OpenSuSE/: {
+      file { "${php::params::fpm_pool_dir}${name}.conf":
+        ensure  => file,
+        path    => "${php::params::fpm_conf_dir}${name}.conf",
+        owner   => 'root',
+        group   => 'root',
+        content => template('php/fpm-pool.conf.erb'),
+        require => Class['php::fpm::install'],
+        before  => Class['php::fpm::service'],
+        notify  => Class['php::fpm::service'],
+      }
+    }
   }
 }
