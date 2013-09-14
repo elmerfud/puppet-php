@@ -34,7 +34,10 @@ class php::config {
           require => Class["php::install"],
           ensure  => directory;
         "${php::params::cli_dir}conf.d":
-          ensure => "../conf.d";
+          ensure  => link,
+          target  => '../conf.d',
+          force   => true,
+          require => File[$php::params::cli_dir];
       }
 
     }

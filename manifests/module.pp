@@ -1,19 +1,21 @@
-define php::module($ensure = present, $source = undef, $content = undef, $require = undef, $notify = undef, $package_prefix = 'php5-') {
-    include php
+define php::module(
+  $ensure = present,
+  $package_prefix = 'php5-',
+  $source = undef,
+  $content = undef,
+  $notify = undef
+) {
+  include php
 
-    $file_name = "${name}.ini"
+  $file_name = "${name}.ini"
 
-    if $require {
-      $real_require = [ Class['php::install'], $require, ]
-    } else {
-      $real_require = Class['php::install']
-    }
+    $real_require = Class['php::install']
 
-    package { "php-${name}":
-        name => "${package_prefix}${name}",
-        ensure  => $ensure,
-        require => $real_require,
-    }
+  package { "php-${name}":
+    ensure  => $ensure,
+    name    => "${package_prefix}${name}",
+    require => $real_require,
+  }
 
     file { "${php::params::conf_dir}$file_name":
         path    => "${php::params::conf_dir}${file_name}",

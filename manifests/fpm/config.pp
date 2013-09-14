@@ -12,9 +12,11 @@ class php::fpm::config {
           notify  => Class["php::fpm::service"],
           ensure  => directory;
         "${php::params::fpm_dir}conf.d":
-          ensure  => "../conf.d",
+          ensure  => link,
+          target  => '../conf.d',
+          force   => true,
           require => File[$php::params::fpm_dir],
-          notify  => Class["php::fpm::service"];
+          notify  => Class['php::fpm::service'];
         "${php::params::fpm_dir}pool.d":
           owner   => root,
           group   => root,

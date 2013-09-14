@@ -61,4 +61,5 @@ class php::params( $php_package_prefix = undef ) {
             $apache_service_name = "apache2"
         }
     }
+  }
 }
