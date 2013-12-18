@@ -17,14 +17,15 @@ define php::module(
     require => $real_require,
   }
 
-    file { "${php::params::conf_dir}$file_name":
-        path    => "${php::params::conf_dir}${file_name}",
-        mode    => 644,
-        owner   => root,
-        group   => root,
-        ensure  => $ensure,
-        notify  => $notify,
-        source  => $source ? {
+  file { 
+    "${php::params::conf_dir}$file_name":
+      path    => "${php::params::conf_dir}${file_name}",
+      mode    => 644,
+      owner   => root,
+      group   => root,
+      ensure  => $ensure,
+      notify  => $notify,
+      source  => $source ? {
             undef   => undef,
             true    => [
                 "puppet:///modules/php/modules_ini/${file_name}",
@@ -34,14 +35,14 @@ define php::module(
                 "puppet:///files/global/etc/php5/conf.d/${file_name}",
             ], 
             default => "${source}${file_name}",
-        },
-        content => $content ? {
-            undef   => undef,
-            default => template("${content}${file_name}.erb"),
-        },
-        require => [
-            Class["php"],
-            Package["php-${name}"],
-        ],
+      },
+      content => is_array($content) ? {
+            true    => inline_template("<%= (@content).join('\n') + '\n' %>"),
+            false => $content ? { 
+                undef => undef,
+                default => template("${content}${file_name}.erb"),
+            },
+      },
+      require => [ Class["php"], Package["php-${name}"] ];
     }
 }
