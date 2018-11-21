@@ -20,7 +20,7 @@ define php::module(
   file { 
     "${php::params::conf_dir}$file_name":
       path    => "${php::params::conf_dir}${file_name}",
-      mode    => 644,
+      mode    => '644',
       owner   => root,
       group   => root,
       ensure  => $ensure,
